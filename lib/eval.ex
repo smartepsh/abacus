@@ -21,9 +21,13 @@ defmodule Abacus.Eval do
       when is_number(a) and is_number(b),
       do: {:ok, a - b}
 
-  def eval({:divide, a, b}, _)
-      when is_number(a) and is_number(b),
-      do: {:ok, a / b}
+  def eval({:divide, a, b}, _) when is_number(a) and is_number(b) do
+    if b == 0 do
+      {:error, "divisor can't be 0"}
+    else
+      {:ok, a / b}
+    end
+  end
 
   def eval({:multiply, a, b}, _)
       when is_number(a) and is_number(b),
